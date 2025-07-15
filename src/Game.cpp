@@ -19,14 +19,18 @@ void Game::pollEvents() {
     }
 }
 
-void Game::render() {
+void Game::update() {
     window.clear();
+
+}
+
+void Game::render() {
     player.draw(window);
     window.display();
 }
 
 Game::Game(const std::string& title, int width, int height) :
-    windowWidth(width), windowHeight(height), windowTitle(title), player("assets/Player")
+    windowWidth(width), windowHeight(height), windowTitle(title), player("assets/Player", 8)
 {
     initWindow();
     player.setPosition(windowWidth / 2.f, windowHeight / 2.f);
@@ -38,6 +42,7 @@ Game::~Game() {
 void Game::run() {
     while (window.isOpen()) {
         pollEvents();
+        update();
         render();
     }
 }

@@ -9,18 +9,22 @@ void Player::loadTextures(const std::string& dirPath) {
     if (!runTexture.loadFromFile(dirPath + "/run.png")) {
         std::cerr << "Error loading run texture from " << dirPath << "/run.png" << std::endl;
     }
+
+    idleTexture.setSmooth(true);
+	runTexture.setSmooth(true);
 }
 
-Player::Player(const std::string& dirPath) :
-    frameWidth(72), frameHeight(64), sprite(idleTexture)
+Player::Player(const std::string& dirPath, int initFrameCount = 8) :
+	sprite(idleTexture)
 {
     loadTextures(dirPath);
+	frameWidth = idleTexture.getSize().x / initFrameCount;
+	frameHeight = idleTexture.getSize().y;
 
     sprite.setTexture(idleTexture);
+
     sprite.setOrigin({ static_cast<float>(frameWidth / 2), static_cast<float>(frameHeight / 2) });
     sprite.setScale({ 2.f, 2.f });
     sprite.setTextureRect(sf::IntRect({ 0, 0 }, { frameWidth, frameHeight }));
 
-
-    std::cout << "Player created with texture from: " << dirPath << std::endl;
 }

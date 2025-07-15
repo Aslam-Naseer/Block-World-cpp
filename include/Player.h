@@ -15,7 +15,7 @@ private:
     void loadTextures(const std::string& dirPath);
 
 public:
-    Player(const std::string& dirPath);
+    Player(const std::string& dirPath, int initFrameCount);
     ~Player() = default;
 
     sf::Vector2f getPosition() const { return sprite.getPosition(); }

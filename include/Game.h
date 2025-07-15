@@ -14,6 +14,7 @@ private:
 
     void initWindow();
     void pollEvents();
+    void update();
     void render();
 
 public:
