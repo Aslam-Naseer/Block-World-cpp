@@ -12,6 +12,8 @@ private:
     Player player;
     sf::RenderWindow window;
 
+	sf::Clock clock;
+
     void initWindow();
     void pollEvents();
     void update();

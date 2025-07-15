@@ -14,16 +14,29 @@ void Player::loadTextures(const std::string& dirPath) {
 	runTexture.setSmooth(true);
 }
 
-Player::Player(const std::string& dirPath, int initFrameCount = 8) :
-	sprite(idleTexture)
+void Player::updateAnimation(float deltaTime) {
+    
+    delay += deltaTime;
+    if (delay >= maxDelay) {
+		delay -= maxDelay;
+		currentFrame = (currentFrame + 1) % frameCount;
+        sprite.setTextureRect(sf::IntRect(
+            { currentFrame * frameWidth, 0 }, { frameWidth, frameHeight }));
+    }
+}
+
+Player::Player(const std::string& dirPath, int initFrameCount, float maxDelay) :
+	sprite(idleTexture), maxDelay(maxDelay), delay(0.f), currentFrame(0), frameCount(initFrameCount)
 {
     loadTextures(dirPath);
 	frameWidth = idleTexture.getSize().x / initFrameCount;
 	frameHeight = idleTexture.getSize().y;
 
     sprite.setTexture(idleTexture);
-
+    frameCount = 8;
     sprite.setOrigin({ static_cast<float>(frameWidth / 2), static_cast<float>(frameHeight / 2) });
+
+
     sprite.setScale({ 2.f, 2.f });
     sprite.setTextureRect(sf::IntRect({ 0, 0 }, { frameWidth, frameHeight }));
 

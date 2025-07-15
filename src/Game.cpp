@@ -1,5 +1,6 @@
 #include "Game.h"
 #include <iostream>
+#include <SFML/Graphics.hpp>
 
 void Game::initWindow() {
     window = sf::RenderWindow(sf::VideoMode({ windowWidth, windowHeight }), windowTitle);
@@ -21,7 +22,8 @@ void Game::pollEvents() {
 
 void Game::update() {
     window.clear();
-
+    float deltaTime = clock.restart().asSeconds();
+    player.updateAnimation(deltaTime);
 }
 
 void Game::render() {
@@ -30,7 +32,7 @@ void Game::render() {
 }
 
 Game::Game(const std::string& title, int width, int height) :
-    windowWidth(width), windowHeight(height), windowTitle(title), player("assets/Player", 8)
+    windowWidth(width), windowHeight(height), windowTitle(title), player("assets/Player", 8, 0.05)
 {
     initWindow();
     player.setPosition(windowWidth / 2.f, windowHeight / 2.f);
