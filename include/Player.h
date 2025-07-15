@@ -2,6 +2,10 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
+enum class PlayerState {
+    Idle,
+    Running
+};
 
 class Player
 {
@@ -18,18 +22,21 @@ private:
 	float maxDelay;
 	float delay;
 
+	PlayerState state;
+	bool isFacingRight;
+
     void loadTextures(const std::string& dirPath);
+    void updateAnimation(float deltaTime);
 
 public:
     Player(const std::string& dirPath, int initFrameCount, float maxDelay);
     ~Player() = default;
 
-    void updateAnimation(float deltaTime);
     sf::Vector2f getPosition() const { return sprite.getPosition(); }
     void setPosition(float x, float y) { sprite.setPosition({ x, y }); }
     void draw(sf::RenderWindow& window) { window.draw(sprite); }
 
-	//void handleInput();
- //   void idle();
- //   void run();
+	void handleInput(float deltaTime);
+    void idle();
+    void run(bool faceRight);
 };

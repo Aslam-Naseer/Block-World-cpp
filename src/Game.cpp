@@ -23,7 +23,7 @@ void Game::pollEvents() {
 void Game::update() {
     window.clear();
     float deltaTime = clock.restart().asSeconds();
-    player.updateAnimation(deltaTime);
+    player.handleInput(deltaTime);
 }
 
 void Game::render() {

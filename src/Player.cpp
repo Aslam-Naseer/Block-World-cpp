@@ -1,5 +1,6 @@
 #include "Player.h"
 #include <iostream>
+#include <SFML/Graphics.hpp>
 
 void Player::loadTextures(const std::string& dirPath) {
     // Load textures from the specified directory
@@ -26,7 +27,8 @@ void Player::updateAnimation(float deltaTime) {
 }
 
 Player::Player(const std::string& dirPath, int initFrameCount, float maxDelay) :
-	sprite(idleTexture), maxDelay(maxDelay), delay(0.f), currentFrame(0), frameCount(initFrameCount)
+	sprite(idleTexture), maxDelay(maxDelay), delay(0.f), currentFrame(0),
+	state(PlayerState::Idle), isFacingRight(false)
 {
     loadTextures(dirPath);
 	frameWidth = idleTexture.getSize().x / initFrameCount;
@@ -36,8 +38,48 @@ Player::Player(const std::string& dirPath, int initFrameCount, float maxDelay) :
     frameCount = 8;
     sprite.setOrigin({ static_cast<float>(frameWidth / 2), static_cast<float>(frameHeight / 2) });
 
-
-    sprite.setScale({ 2.f, 2.f });
+    sprite.setScale({ -2.f, 2.f });
     sprite.setTextureRect(sf::IntRect({ 0, 0 }, { frameWidth, frameHeight }));
 
+}
+
+void Player::handleInput(float deltatime) {
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::A)) {
+		run(false);
+    } else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::D)) {
+		run(true);
+    } else {
+        idle();
+	}
+
+	updateAnimation(deltatime);
+}
+
+void Player::idle() {
+    if (state == PlayerState::Idle)
+        return;
+
+	state = PlayerState::Idle;
+    sprite.setTexture(idleTexture);
+    currentFrame = 0;
+    frameCount = 8;
+
+}
+
+void Player::run(bool faceRight) {
+    if(state == PlayerState::Running && isFacingRight == faceRight)
+		return;
+
+	state = PlayerState::Running;
+	isFacingRight = faceRight;
+	sprite.setTexture(runTexture);
+    currentFrame = 0;
+    frameCount = 10;
+
+    if(isFacingRight) {
+        sprite.setScale({ -2.f, 2.f });
+    } else {
+        sprite.setScale({ 2.f, 2.f });
+	}
 }
