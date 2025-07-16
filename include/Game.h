@@ -8,9 +8,11 @@ class Game
 private:
     unsigned int windowWidth;
     unsigned int windowHeight;
+
     std::string windowTitle;
     Player player;
     sf::RenderWindow window;
+	sf::View view;
 
 	sf::Clock clock;
 

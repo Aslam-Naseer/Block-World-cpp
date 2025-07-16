@@ -5,6 +5,8 @@
 void Game::initWindow() {
     window = sf::RenderWindow(sf::VideoMode().getDesktopMode(), windowTitle, sf::Style::Default, sf::State::Fullscreen);
     window.setFramerateLimit(144);
+
+	view = window.getDefaultView();
 }
 
 void Game::pollEvents() {
@@ -24,9 +26,12 @@ void Game::update() {
     window.clear();
     float deltaTime = clock.restart().asSeconds();
     player.handleInput(deltaTime);
+	view.setCenter(player.getPosition());
 }
 
 void Game::render() {
+
+	window.setView(view);
     player.draw(window);
     window.display();
 }
