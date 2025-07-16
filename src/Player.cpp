@@ -27,18 +27,15 @@ void Player::updateAnimation(float deltaTime) {
 }
 
 Player::Player(const std::string& dirPath, float maxDelay, float speed) :
-	sprite(idleTexture), maxDelay(maxDelay), delay(0.f), currentFrame(0),
-	state(PlayerState::Idle), isFacingRight(false), speed(speed)
+	sprite(idleTexture), maxDelay(maxDelay), delay(0.f), speed(speed),
+	state(PlayerState::Idle), isFacingRight(false), currentFrame(0), 
+	frameCount(IDLEFRAMECOUNT)
 {
     loadTextures(dirPath);
 	frameWidth = idleTexture.getSize().x / IDLEFRAMECOUNT;
 	frameHeight = idleTexture.getSize().y;
 
-    sprite.setTexture(idleTexture);
-    frameCount = 8;
     sprite.setOrigin({ static_cast<float>(frameWidth / 4), static_cast<float>(frameHeight / 2) });
-
-    sprite.setScale({ -2.f, 2.f });
     sprite.setTextureRect(sf::IntRect({ 0, 0 }, { frameWidth, frameHeight }));
 
 }
@@ -80,8 +77,8 @@ void Player::run(bool faceRight, float deltatime) {
     frameCount = RUNFRAMECOUNT;
 
     if(isFacingRight) {
-        sprite.setScale({ -2.f, 2.f });
+        sprite.setScale({ -1.f, 1.f });
     } else {
-        sprite.setScale({ 2.f, 2.f });
+        sprite.setScale({ 1.f, 1.f });
 	}
 }
