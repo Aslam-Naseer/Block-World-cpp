@@ -10,6 +10,9 @@ enum class PlayerState {
 class Player
 {
 private:
+	static constexpr int IDLEFRAMECOUNT = 8;
+	static constexpr int RUNFRAMECOUNT = 10;
+
     sf::Texture idleTexture;
     sf::Texture runTexture;
     sf::Sprite sprite;
@@ -29,7 +32,7 @@ private:
     void updateAnimation(float deltaTime);
 
 public:
-    Player(const std::string& dirPath, int initFrameCount, float maxDelay);
+    Player(const std::string& dirPath, float maxDelay);
     ~Player() = default;
 
     sf::Vector2f getPosition() const { return sprite.getPosition(); }

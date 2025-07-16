@@ -26,12 +26,12 @@ void Player::updateAnimation(float deltaTime) {
     }
 }
 
-Player::Player(const std::string& dirPath, int initFrameCount, float maxDelay) :
+Player::Player(const std::string& dirPath, float maxDelay) :
 	sprite(idleTexture), maxDelay(maxDelay), delay(0.f), currentFrame(0),
 	state(PlayerState::Idle), isFacingRight(false)
 {
     loadTextures(dirPath);
-	frameWidth = idleTexture.getSize().x / initFrameCount;
+	frameWidth = idleTexture.getSize().x / IDLEFRAMECOUNT;
 	frameHeight = idleTexture.getSize().y;
 
     sprite.setTexture(idleTexture);
@@ -63,7 +63,7 @@ void Player::idle() {
 	state = PlayerState::Idle;
     sprite.setTexture(idleTexture);
     currentFrame = 0;
-    frameCount = 8;
+    frameCount = IDLEFRAMECOUNT;
 
 }
 
@@ -75,7 +75,7 @@ void Player::run(bool faceRight) {
 	isFacingRight = faceRight;
 	sprite.setTexture(runTexture);
     currentFrame = 0;
-    frameCount = 10;
+    frameCount = RUNFRAMECOUNT;
 
     if(isFacingRight) {
         sprite.setScale({ -2.f, 2.f });
