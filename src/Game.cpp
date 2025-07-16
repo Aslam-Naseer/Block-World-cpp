@@ -32,7 +32,7 @@ void Game::render() {
 }
 
 Game::Game(const std::string& title, int width, int height) :
-    windowWidth(width), windowHeight(height), windowTitle(title), player("assets/Player", 0.05)
+    windowWidth(width), windowHeight(height), windowTitle(title), player("assets/Player", 0.05, 500.f)
 {
     initWindow();
     player.setPosition(windowWidth / 2.f, windowHeight / 2.f);

@@ -26,9 +26,9 @@ void Player::updateAnimation(float deltaTime) {
     }
 }
 
-Player::Player(const std::string& dirPath, float maxDelay) :
+Player::Player(const std::string& dirPath, float maxDelay, float speed) :
 	sprite(idleTexture), maxDelay(maxDelay), delay(0.f), currentFrame(0),
-	state(PlayerState::Idle), isFacingRight(false)
+	state(PlayerState::Idle), isFacingRight(false), speed(speed)
 {
     loadTextures(dirPath);
 	frameWidth = idleTexture.getSize().x / IDLEFRAMECOUNT;
@@ -36,7 +36,7 @@ Player::Player(const std::string& dirPath, float maxDelay) :
 
     sprite.setTexture(idleTexture);
     frameCount = 8;
-    sprite.setOrigin({ static_cast<float>(frameWidth / 2), static_cast<float>(frameHeight / 2) });
+    sprite.setOrigin({ static_cast<float>(frameWidth / 4), static_cast<float>(frameHeight / 2) });
 
     sprite.setScale({ -2.f, 2.f });
     sprite.setTextureRect(sf::IntRect({ 0, 0 }, { frameWidth, frameHeight }));
@@ -46,9 +46,9 @@ Player::Player(const std::string& dirPath, float maxDelay) :
 void Player::handleInput(float deltatime) {
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::A)) {
-		run(false);
+		run(false, deltatime);
     } else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::D)) {
-		run(true);
+		run(true, deltatime);
     } else {
         idle();
 	}
@@ -67,7 +67,9 @@ void Player::idle() {
 
 }
 
-void Player::run(bool faceRight) {
+void Player::run(bool faceRight, float deltatime) {
+
+	sprite.move({ (faceRight ? 1 : -1) * speed * deltatime , 0.f });
     if(state == PlayerState::Running && isFacingRight == faceRight)
 		return;
 

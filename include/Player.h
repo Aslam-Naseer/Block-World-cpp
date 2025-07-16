@@ -24,6 +24,7 @@ private:
 
 	float maxDelay;
 	float delay;
+	float speed;
 
 	PlayerState state;
 	bool isFacingRight;
@@ -32,7 +33,7 @@ private:
     void updateAnimation(float deltaTime);
 
 public:
-    Player(const std::string& dirPath, float maxDelay);
+    Player(const std::string& dirPath, float maxDelay, float speed);
     ~Player() = default;
 
     sf::Vector2f getPosition() const { return sprite.getPosition(); }
@@ -41,5 +42,5 @@ public:
 
 	void handleInput(float deltaTime);
     void idle();
-    void run(bool faceRight);
+    void run(bool faceRight, float deltaTime);
 };
